@@ -1,0 +1,11 @@
+FROM nginx:1.15.0-alpine
+
+RUN rm /etc/nginx/conf.d/default.conf
+#remvoe arquivo padrão do nginx de confi
+
+COPY nginx.conf /etc/nginx/conf.d
+
+RUN mkdir /var/www/html -p && touch /var/www/html/index.html
+
+#nginx precisa de um arquivo index,php ou index.html em branco mesmo 
+#para ele encontrar algo antes de redirecionar para o laravel

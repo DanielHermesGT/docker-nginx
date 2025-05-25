@@ -1,0 +1,27 @@
+
+aqui vamos criar uma imagem docker capaz de compartilhar volume entre
+computador e container
+
+- docker run --rm -it -v $(pwd)/:/usr/src/app -p 3000:3000 node:15 bash
+
+assim é possivel usar ima ferramenta sem nem baixar no pc, apenas usando imagem
+do docker
+
+-  npm init
+- npm install express --save
+- cria a index e pos a route
+
+=> assim pode fazer codigos em node sem o node na minha maquina
+compartilhando o container e o pc espaços e usando so a ferramenta do 
+docker
+
+--- agora caso tenha js na maquina e queira fazer dockerFile
+
+--- devemos cuidar pois o mysql pode atrasar em relação ao node, e o node
+tente conectar, de erro e cancele.
+
+-> usamos uma relação de dependencia
+
+- dependeces_on e dockerrize
+
+lembrar que para executar isso é necessario dar npm i
