@@ -1,0 +1,53 @@
+services:
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.prod
+    container_name: nginx-nginx-desafio
+    ports:
+      - "8080:80"
+    networks:
+      - nodenetwork
+    depends_on:
+      - node
+
+  node:
+    build:  
+      context: ./docker-pratico-node
+      dockerfile: Dockerfile
+    container_name: node
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 60s node index.js
+    networks:
+      - nodenetwork
+    volumes:
+      - ./docker-pratico-node:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    tty: true
+    ports: 
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:   # ❗️MUITO IMPORTANTE: db estava indentado DENTRO de node. Deve ficar FORA!
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0
+    container_name: db-mysql
+    restart: always
+    tty: true
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - nodenetwork
+
+volumes:
+  node_modules:
+  # permite compartilhar o node_modules entre o container node e o host, o docker cria ele na nossa maquina local
+  
+
+networks:
+  nodenetwork:
+    driver: bridge
