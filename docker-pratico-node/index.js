@@ -20,6 +20,22 @@ connection.connect((err) => {
     }
 });
 
+const createTableQuery = `
+        CREATE TABLE IF NOT EXISTS people (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL
+        )
+    `;
+
+    connection.query(createTableQuery, (err, result) => {
+        if (err) {
+            console.log('Erro ao criar a tabela', err);
+        } else {
+            console.log('Tabela criada ou já existente');
+        }
+    });
+});
+
 app.get('/', (req, res) => {
   const insertSql = 'INSERT INTO people (name) VALUES ("Daniel")';
   connection.query(insertSql, (insertErr) => {
