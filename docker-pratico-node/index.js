@@ -34,7 +34,6 @@ const createTableQuery = `
             console.log('Tabela criada ou já existente');
         }
     });
-});
 
 app.get('/', (req, res) => {
   const insertSql = 'INSERT INTO people (name) VALUES ("Daniel")';
